@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HASSAN Electric Power Plant | Next-Gen Clean Energy & Grid Control</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts: Orbitron & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --bg-dark: #080C14;
+            --bg-card: #0F172A;
+            --bg-card-hover: #1E293B;
+            --cyan-glow: #00f2fe;
+            --blue-accent: #4facfe;
+            --green-glow: #10b981;
+            --amber-alert: #f59e0b;
+            --danger-red: #ef4444;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --border-glow: rgba(0, 242, 254, 0.25);
+            --font-heading: 'Orbitron', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, .brand-font {
+            font-family: var(--font-heading);
+            letter-spacing: 0.5px;
+        }
+
+        .text-cyan { color: var(--cyan-glow); }
+        .text-accent { color: var(--blue-accent); }
+        .bg-card { background-color: var(--bg-card); }
+        
+        /* Glassmorphism & Cyber Borders */
+        .cyber-card {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cyber-card:hover {
+            border-color: var(--cyan-glow);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .cyber-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: linear-gradient(180deg, var(--cyan-glow), var(--blue-accent));
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .cyber-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Glowing Pulse FX */
+        .electric-glow {
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.6), 0 0 20px rgba(0, 242, 254, 0.3);
+        }
+
+        .pulse-badge {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px currentColor;
+            animation: pulse-ring 1.8s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+
+        /* Navbar Styling */
+        .navbar-cyber {
+            background: rgba(8, 12, 20, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 242, 254, 0.2);
+        }
+
+        .nav-link {
+            font-family: var(--font-heading);
+            font-size: 0.85rem;
+            color: var(--text-muted) !important;
+            transition: all 0.3s;
+            position: relative;
+            padding: 8px 16px !important;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--cyan-glow) !important;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 15%;
+            width: 70%;
+            height: 2px;
+            background: var(--cyan-glow);
+            box-shadow: 0 0 8px var(--cyan-glow);
+        }
+
+        /* Hero Section Animation */
+        .hero-banner {
+            background: linear-gradient(rgba(8, 12, 20, 0.75), rgba(8, 12, 20, 0.95)), 
+                        url('https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-grid-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: linear-gradient(rgba(0, 242, 254, 0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0, 242, 254, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        /* Buttons */
+        .btn-cyber-primary {
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            color: #000;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 6px;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-cyber-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.7);
+            color: #000;
+        }
+
+        .btn-cyber-outline {
+            border: 1px solid var(--cyan-glow);
+            color: var(--cyan-glow);
+            font-family: var(--font-heading);
+            background: transparent;
+            padding: 12px 28px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cyber-outline:hover {
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--text-main);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+        }
+
+        /* Custom Views Display Toggle */
+        .page-view {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        .page-view.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Dynamic Metrics Counter Box */
+        .stat-box {
+            border-left: 3px solid var(--cyan-glow);
+            padding-left: 15px;
+        }
+
+        /* Facility Cards Image Zoom */
+        .facility-img-wrap {
+            overflow: hidden;
+            height: 220px;
+            position: relative;
+        }
+
+        .facility-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .cyber-card:hover .facility-img-wrap img {
+            transform: scale(1.08);
+        }
+
+        /* Custom Switch */
+        .form-check-input:checked {
+            background-color: var(--cyan-glow);
+            border-color: var(--cyan-glow);
+            box-shadow: 0 0 8px var(--cyan-glow);
+        }
+
+        /* Interactive Plant Diagram Grid */
+        .diagram-node {
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .diagram-node:hover, .diagram-node.active-node {
+            background: rgba(0, 242, 254, 0.15);
+            border-color: var(--cyan-glow);
+            transform: scale(1.03);
+        }
+
+        /* Footer Styling */
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: #04070D;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--cyan-glow);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MAIN NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top navbar-cyber px-lg-4">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="#home" onclick="switchPage('home')">
+                <i class="fa-solid fa-bolt-lightning text-cyan fs-3 me-2"></i>
+                <div>
+                    <span class="fw-bold tracking-wider fs-5 text-white">HASSAN</span>
+                    <span class="badge bg-transparent border border-info text-cyan ms-1 fs-7">POWER & ENERGY</span>
+                </div>
+            </a>
+            
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCyberContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarCyberContent">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="nav-home" href="#home" onclick="switchPage('home')">
+                            <i class="fa-solid fa-house-circle-check me-1"></i> OVERVIEW
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-facilities" href="#facilities" onclick="switchPage('facilities')">
+                            <i class="fa-solid fa-industry me-1"></i> FACILITIES & TECH
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-dashboard" href="#dashboard" onclick="switchPage('dashboard')">
+                            <i class="fa-solid fa-chart-line me-1"></i> LIVE TELEMETRY
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-sustainability" href="#sustainability" onclick="switchPage('sustainability')">
+                            <i class="fa-solid fa-leaf me-1"></i> SUSTAINABILITY
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-contact" href="#contact" onclick="switchPage('contact')">
+                            <i class="fa-solid fa-headset me-1"></i> CONTACT & INQUIRIES
+                        </a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <div class="text-end d-none d-xl-block">
+                        <small class="d-block text-muted style-code" style="font-size:0.75rem;">GRID STATUS</small>
+                        <span class="text-success fw-bold style-code" style="font-size:0.85rem;">
+                            <span class="pulse-badge bg-success me-1"></span> SYNCHRONIZED
+                        </span>
+                    </div>
+                    <button class="btn btn-cyber-primary text-uppercase" onclick="switchPage('dashboard')">
+                        <i class="fa-solid fa-desktop me-1"></i> Control Room
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE 1: HOME / OVERVIEW -->
+    <div id="page-home" class="page-view active">
+        <!-- Hero Section -->
+        <section class="hero-banner py-5">
+            <div class="hero-grid-overlay"></div>
+            <div class="container position-relative z-1 my-4">
+                <div class="row align-items-center gy-5">
+                    <div class="col-lg-7">
+                        <div class="badge bg-dark border border-cyan text-cyan mb-3 px-3 py-2 rounded-pill">
+                            <i class="fa-solid fa-atom me-1"></i> 3.8 GW TOTAL CAPACITY GENERATION
+                        </div>
+                        <h1 class="display-3 fw-extrabold text-white mb-3">
+                            POWERING THE FUTURE WITH <span class="text-cyan electric-glow">ZERO MARGIN FOR ERROR</span>
+                        </h1>
+                        <p class="lead text-muted mb-4 pe-lg-5">
+                            Hassan Electric Power Plant delivers ultra-reliable mega-wattage grid connectivity by seamlessly blending Hydroelectric, Solar Photovoltaic Fields, and Next-Gen Low-Carbon Combined-Cycle Turbines.
+                        </p>
+                        <div class="d-flex flex-wrap gap-3">
+                            <button class="btn btn-cyber-primary" onclick="switchPage('dashboard')">
+                                <i class="fa-solid fa-gauge-high me-2"></i> Launch Grid Monitor
+                            </button>
+                            <button class="btn btn-cyber-outline" onclick="switchPage('facilities')">
+                                <i class="fa-solid fa-circle-nodes me-2"></i> Explore Operations
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="cyber-card p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3 border-bottom border-secondary pb-2">
+                                <h5 class="m-0 text-white"><i class="fa-solid fa-microchip text-cyan me-2"></i> PLANT REAL-TIME HUD</h5>
+                                <span class="badge bg-success">ONLINE</span>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <div class="bg-dark p-3 rounded border border-secondary">
+                                        <small class="text-muted d-block">Active Power Output</small>
+                                        <h3 class="text-cyan fw-bold mb-0 mt-1" id="hero-mw">2,845 <span class="fs-6 text-muted">MW</span></h3>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="bg-dark p-3 rounded border border-secondary">
+                                        <small class="text-muted d-block">Grid Frequency</small>
+                                        <h3 class="text-cyan fw-bold mb-0 mt-1" id="hero-hz">50.02 <span class="fs-6 text-muted">Hz</span></h3>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="bg-dark p-3 rounded border border-secondary">
+                                        <small class="text-muted d-block">Clean Power Ratio</small>
+                                        <h3 class="text-success fw-bold mb-0 mt-1">68.4%</h3>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="bg-dark p-3 rounded border border-secondary">
+                                        <small class="text-muted d-block">Operational Efficiency</small>
+                                        <h3 class="text-accent fw-bold mb-0 mt-1">99.4%</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-3 border-top border-secondary text-center">
+                                <small class="text-muted"><i class="fa-solid fa-shield-halved text-cyan me-1"></i> Autonomous Smart Grid Stabilization Engine Active</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Statistics Row -->
+        <section class="py-5 bg-dark">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="cyber-card p-4 text-center">
+                            <i class="fa-solid fa-bolt text-cyan fs-1 mb-2"></i>
+                            <h2 class="fw-bold text-white mb-0">3,800 MW</h2>
+                            <p class="text-muted mb-0 small">Peak Installed Capacity</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="cyber-card p-4 text-center">
+                            <i class="fa-solid fa-tree text-success fs-1 mb-2"></i>
+                            <h2 class="fw-bold text-white mb-0">1.2M Tons</h2>
+                            <p class="text-muted mb-0 small">CO2 Offset Annually</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="cyber-card p-4 text-center">
+                            <i class="fa-solid fa-city text-accent fs-1 mb-2"></i>
+                            <h2 class="fw-bold text-white mb-0">4.5M+</h2>
+                            <p class="text-muted mb-0 small">Homes Served</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="cyber-card p-4 text-center">
+                            <i class="fa-solid fa-award text-warning fs-1 mb-2"></i>
+                            <h2 class="fw-bold text-white mb-0">99.99%</h2>
+                            <p class="text-muted mb-0 small">Grid Uptime SLA</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Plant Energy Flow Architecture Diagram -->
+        <section class="py-5">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <span class="badge bg-secondary text-cyan px-3 py-2">SYSTEM SCHEMATIC</span>
+                    <h2 class="display-6 fw-bold text-white mt-2">HASSAN INTEGRATED ENERGY FLOW</h2>
+                    <p class="text-muted">Click any generation module to inspect telemetry details</p>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="diagram-node active-node" id="node-hydro" onclick="selectDiagramNode('hydro')">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="p-3 bg-dark rounded-circle me-3 text-cyan border border-info">
+                                    <i class="fa-solid fa-water fs-3"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-white mb-0">Hydro Dam</h5>
+                                    <small class="text-muted">1,200 MW Turbines</small>
+                                </div>
+                            </div>
+                            <span class="badge bg-success">Status: Optimal</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="diagram-node" id="node-solar" onclick="selectDiagramNode('solar')">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="p-3 bg-dark rounded-circle me-3 text-warning border border-warning">
+                                    <i class="fa-solid fa-solar-panel fs-3"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-white mb-0">Solar PV Fields</h5>
+                                    <small class="text-muted">950 MW Clean Output</small>
+                                </div>
+                            </div>
+                            <span class="badge bg-success">Status: Active</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="diagram-node" id="node-gas" onclick="selectDiagramNode('gas')">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="p-3 bg-dark rounded-circle me-3 text-danger border border-danger">
+                                    <i class="fa-solid fa-fire-flame-curved fs-3"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-white mb-0">Combined Cycle</h5>
+                                    <small class="text-muted">1,650 MW High-Eff Gas</small>
+                                </div>
+                            </div>
+                            <span class="badge bg-info text-dark">Status: Peak Load</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="diagram-node" id="node-grid" onclick="selectDiagramNode('grid')">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="p-3 bg-dark rounded-circle me-3 text-accent border border-primary">
+                                    <i class="fa-solid fa-tower-cell fs-3"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-white mb-0">Substation Grid</h5>
+                                    <small class="text-muted">500kV Transmission</small>
+                                </div>
+                            </div>
+                            <span class="badge bg-success">Status: Synced</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Dynamic Inspector Container -->
+                <div class="cyber-card p-4 mt-4" id="diagram-inspector-box">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h4 class="text-cyan mb-2" id="inspector-title">Hydroelectric Turbine Complex Alpha</h4>
+                            <p class="text-muted mb-0" id="inspector-desc">
+                                Harnessing water kinetic energy with 6 Francis High-Efficiency Turbines. Delivers zero-emission base load energy directly into the regional transmission ring.
+                            </p>
+                        </div>
+                        <div class="col-md-4 border-start border-secondary pt-3 pt-md-0">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">Current Output:</span>
+                                <span class="fw-bold text-white" id="inspector-mw">1,180 MW</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">Operating Temp:</span>
+                                <span class="fw-bold text-white" id="inspector-temp">48.2 °C</span>
+                            </div>
+                            <div class="progress bg-dark" style="height: 6px;">
+                                <div id="inspector-bar" class="progress-bar bg-info" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <!-- PAGE 2: FACILITIES & TECH -->
+    <div id="page-facilities" class="page-view">
+        <section class="py-5">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <span class="badge bg-secondary text-cyan px-3 py-2">ENGINEERING INFRASTRUCTURE</span>
+                    <h2 class="display-6 fw-bold text-white mt-2">OUR GENERATION DIVISIONS</h2>
+                    <p class="text-muted max-w-700 mx-auto">Explore the technological components that power millions of homes and commercial hubs uninterrupted.</p>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Hydro Power Facility -->
+                    <div class="col-lg-6">
+                        <div class="cyber-card">
+                            <div class="facility-img-wrap">
+                                <img src="https://images.unsplash.com/photo-1574943320219-553eb213f72d?q=80&w=1000&auto=format&fit=crop" alt="Hydroelectric Power Plant Hassan">
+                                <span class="badge bg-dark position-absolute top-0 end-0 m-3 border border-cyan text-cyan">HYBRID DAM</span>
+                            </div>
+                            <div class="p-4">
+                                <h4 class="text-white">Hydroelectric Turbine Facility</h4>
+                                <p class="text-muted">
+                                    Utilizing deep-water reservoirs with high head-pressure turbines, achieving 92% efficiency rating. Provides immediate blackout restoration and frequency stabilization.
+                                </p>
+                                <ul class="list-unstyled text-muted small mb-4">
+                                    <li><i class="fa-solid fa-check-circle text-cyan me-2"></i> 6 x 200MW Francis Hydro Turbines</li>
+                                    <li><i class="fa-solid fa-check-circle text-cyan me-2"></i> 1.2 Billion Cubic Meters Active Storage</li>
+                                    <li><i class="fa-solid fa-check-circle text-cyan me-2"></i> Real-time Automated Intake Control</li>
+                                </ul>
+                                <button class="btn btn-cyber-outline w-100" onclick="showFacilityModal('Hydroelectric Facility', 'The Hassan Hydroelectric Facility operates 6 Francis water turbines capable of reaching full power output within 120 seconds. Built with self-cleaning trash racks and fish-friendly bypass channels.')">
+                                    <i class="fa-solid fa-circle-info me-2"></i> Technical Specifications
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Solar Field -->
+                    <div class="col-lg-6">
+                        <div class="cyber-card">
+                            <div class="facility-img-wrap">
+                                <img src="https://images.unsplash.com/photo-1509391365360-2e959784a276?q=80&w=1000&auto=format&fit=crop" alt="Solar Array Fields Hassan">
+                                <span class="badge bg-dark position-absolute top-0 end-0 m-3 border border-warning text-warning">PHOTOVOLTAIC</span>
+                            </div>
+                            <div class="p-4">
+                                <h4 class="text-white">Smart Solar Photovoltaic Fields</h4>
+                                <p class="text-muted">
+                                    Spanning over 2,400 acres, our dual-axis solar trackers utilize bifacial N-type TOPCon panels to capture maximum irradiance throughout the solar trajectory.
+                                </p>
+                                <ul class="list-unstyled text-muted small mb-4">
+                                    <li><i class="fa-solid fa-check-circle text-warning me-2"></i> 1.8 Million Bifacial Solar Modules</li>
+                                    <li><i class="fa-solid fa-check-circle text-warning me-2"></i> Dual-Axis Automated AI Sun Tracking</li>
+                                    <li><i class="fa-solid fa-check-circle text-warning me-2"></i> Robotic Autonomous Waterless Cleaning</li>
+                                </ul>
+                                <button class="btn btn-cyber-outline w-100" onclick="showFacilityModal('Solar PV Farm', 'The Solar Division features AI-driven cloud movement predictive analytics that adjusts panel angles dynamically to maximize photon capture even during overcast conditions.')">
+                                    <i class="fa-solid fa-circle-info me-2"></i> Technical Specifications
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gas Thermal Combined Cycle -->
+                    <div class="col-lg-6">
+                        <div class="cyber-card">
+                            <div class="facility-img-wrap">
+                                <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=1000&auto=format&fit=crop" alt="Natural Gas Turbine Hassan">
+                                <span class="badge bg-dark position-absolute top-0 end-0 m-3 border border-danger text-danger">THERMAL CCGT</span>
+                            </div>
+                            <div class="p-4">
+                                <h4 class="text-white">Combined Cycle Natural Gas Turbines</h4>
+                                <p class="text-muted">
+                                    Advanced H-Class heavy-duty gas turbines paired with heat recovery steam generators (HRSG) to minimize fuel consumption while yielding rapid ramp rates.
+                                </p>
+                                <ul class="list-unstyled text-muted small mb-4">
+                                    <li><i class="fa-solid fa-check-circle text-danger me-2"></i> Low-NOx Dry Combustion Tech</li>
+                                    <li><i class="fa-solid fa-check-circle text-danger me-2"></i> Integrated Post-Combustion Carbon Capture</li>
+                                    <li><i class="fa-solid fa-check-circle text-danger me-2"></i> Hydrogen Blending Ready (Up to 30% H2)</li>
+                                </ul>
+                                <button class="btn btn-cyber-outline w-100" onclick="showFacilityModal('CCGT Thermal Unit', 'Our H-Class gas turbines achieve over 63% net efficiency in combined cycle mode. Exhaust waste heat is routed directly to drive secondary high-pressure steam turbines.')">
+                                    <i class="fa-solid fa-circle-info me-2"></i> Technical Specifications
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Smart Grid Substation -->
+                    <div class="col-lg-6">
+                        <div class="cyber-card">
+                            <div class="facility-img-wrap">
+                                <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=1000&auto=format&fit=crop" alt="High Voltage Substation Hassan">
+                                <span class="badge bg-dark position-absolute top-0 end-0 m-3 border border-primary text-cyan">SUBSTATION 500kV</span>
+                            </div>
+                            <div class="p-4">
+                                <h4 class="text-white">Ultra-HV Transmission Substation</h4>
+                                <p class="text-muted">
+                                    State-of-the-art Gas Insulated Substation (GIS) connecting Hassan Energy Plant to the national high-voltage transmission backbone with sub-millisecond fault isolation.
+                                </p>
+                                <ul class="list-unstyled text-muted small mb-4">
+                                    <li><i class="fa-solid fa-check-circle text-cyan me-2"></i> 500kV SF6-Free Eco Switchgear</li>
+                                    <li><i class="fa-solid fa-check-circle text-cyan me-2"></i> BESS Battery Buffer Storage (500 MWh)</li>
+                                    <li><i class="fa-solid fa-check-circle text-cyan me-2"></i> Optical Fiber SCADA Linkage</li>
+                                </ul>
+                                <button class="btn btn-cyber-outline w-100" onclick="showFacilityModal('500kV Substation', 'Equipped with digital protective relays and solid-state transformers, the grid station features automated islanding detection and real-time synchrophasor metering.')">
+                                    <i class="fa-solid fa-circle-info me-2"></i> Technical Specifications
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- PAGE 3: LIVE OPERATIONS DASHBOARD -->
+    <div id="page-dashboard" class="page-view">
+        <section class="py-5">
+            <div class="container-fluid px-lg-5">
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                    <div>
+                        <h2 class="fw-bold text-white mb-1"><i class="fa-solid fa-desktop text-cyan me-2"></i> SCADA LIVE TELEMETRY DASHBOARD</h2>
+                        <span class="text-muted small">Hassan Power Plant Central Control Unit #1</span>
+                    </div>
+                    <!-- Live Simulation Controls -->
+                    <div class="d-flex align-items-center gap-3 bg-dark p-2 rounded border border-secondary">
+                        <div class="form-check form-switch mb-0">
+                            <input class="form-check-input" type="checkbox" id="simModeToggle" checked onchange="toggleSimulation(this)">
+                            <label class="form-check-input-label text-muted small ms-2" for="simModeToggle">Live Data Stream</label>
+                        </div>
+                        <button class="btn btn-sm btn-outline-danger" onclick="triggerGridEvent('peak')"><i class="fa-solid fa-bolt me-1"></i> Simulate Surge</button>
+                        <button class="btn btn-sm btn-outline-success" onclick="triggerGridEvent('normal')"><i class="fa-solid fa-rotate me-1"></i> Reset Grid</button>
+                    </div>
+                </div>
+
+                <!-- Live Status Cards -->
+                <div class="row g-3 mb-4">
+                    <div class="col-xl-3 col-sm-6">
+                        <div class="cyber-card p-3">
+                            <small class="text-muted d-block fw-bold">TOTAL GENERATION</small>
+                            <div class="d-flex align-items-baseline mt-2">
+                                <h2 class="text-cyan fw-bold me-2 mb-0" id="dash-power">2,910</h2>
+                                <span class="text-muted">MW</span>
+                            </div>
+                            <small class="text-success" id="dash-power-delta"><i class="fa-solid fa-arrow-up me-1"></i> +2.4% vs Target</small>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6">
+                        <div class="cyber-card p-3">
+                            <small class="text-muted d-block fw-bold">GRID FREQUENCY</small>
+                            <div class="d-flex align-items-baseline mt-2">
+                                <h2 class="text-cyan fw-bold me-2 mb-0" id="dash-freq">50.01</h2>
+                                <span class="text-muted">Hz</span>
+                            </div>
+                            <small class="text-success"><i class="fa-solid fa-circle-check me-1"></i> Stable (49.9 - 50.1)</small>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6">
+                        <div class="cyber-card p-3">
+                            <small class="text-muted d-block fw-bold">MAIN TURBINE RPM</small>
+                            <div class="d-flex align-items-baseline mt-2">
+                                <h2 class="text-accent fw-bold me-2 mb-0" id="dash-rpm">3,000</h2>
+                                <span class="text-muted">RPM</span>
+                            </div>
+                            <small class="text-muted"><i class="fa-solid fa-gauge me-1"></i> Synced to 50Hz</small>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6">
+                        <div class="cyber-card p-3">
+                            <small class="text-muted d-block fw-bold">CO2 EMISSIONS INDEX</small>
+                            <div class="d-flex align-items-baseline mt-2">
+                                <h2 class="text-success fw-bold me-2 mb-0" id="dash-carbon">142</h2>
+                                <span class="text-muted">g/kWh</span>
+                            </div>
+                            <small class="text-success"><i class="fa-solid fa-leaf me-1"></i> 65% Below Regulatory Limit</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="row g-4 mb-4">
+                    <div class="col-lg-8">
+                        <div class="cyber-card p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="text-white mb-0"><i class="fa-solid fa-chart-area text-cyan me-2"></i> Power Output Real-time Stream (MW)</h5>
+                                <span class="badge bg-dark text-cyan border border-info">Refresh Rate: 1.5s</span>
+                            </div>
+                            <div style="height: 320px; position: relative;">
+                                <canvas id="powerTrendChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="cyber-card p-4">
+                            <h5 class="text-white mb-3"><i class="fa-solid fa-pie-chart text-cyan me-2"></i> Energy Mix Breakdown</h5>
+                            <div style="height: 250px; position: relative;">
+                                <canvas id="energyMixChart"></canvas>
+                            </div>
+                            <div class="mt-3 text-center">
+                                <small class="text-muted">Renewables contributing <strong class="text-success" id="mix-renewable-pct">65%</strong> to current output</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sector Control Matrix Table -->
+                <div class="cyber-card p-4">
+                    <h5 class="text-white mb-3"><i class="fa-solid fa-sliders text-cyan me-2"></i> Generator Bank Status Matrix</h5>
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover align-middle mb-0">
+                            <thead>
+                                <tr class="text-cyan border-bottom border-secondary">
+                                    <th>UNIT ID</th>
+                                    <th>GENERATOR TYPE</th>
+                                    <th>LOAD %</th>
+                                    <th>ACTIVE MW</th>
+                                    <th>TURBINE TEMP</th>
+                                    <th>STATUS</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="badge bg-dark border">HY-01</span></td>
+                                    <td>Francis Hydro Turbine 1</td>
+                                    <td>
+                                        <div class="progress bg-dark" style="height:6px; width:80px;">
+                                            <div class="progress-bar bg-info" style="width: 90%;"></div>
+                                        </div>
+                                    </td>
+                                    <td>180 MW</td>
+                                    <td>46 °C</td>
+                                    <td><span class="badge bg-success">NORMAL</span></td>
+                                    <td><button class="btn btn-sm btn-outline-info" onclick="toggleUnitState(this, 'HY-01')">Standby</button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge bg-dark border">HY-02</span></td>
+                                    <td>Francis Hydro Turbine 2</td>
+                                    <td>
+                                        <div class="progress bg-dark" style="height:6px; width:80px;">
+                                            <div class="progress-bar bg-info" style="width: 88%;"></div>
+                                        </div>
+                                    </td>
+                                    <td>176 MW</td>
+                                    <td>45 °C</td>
+                                    <td><span class="badge bg-success">NORMAL</span></td>
+                                    <td><button class="btn btn-sm btn-outline-info" onclick="toggleUnitState(this, 'HY-02')">Standby</button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge bg-dark border">SL-01</span></td>
+                                    <td>Solar Photovoltaic Inverter Station A</td>
+                                    <td>
+                                        <div class="progress bg-dark" style="height:6px; width:80px;">
+                                            <div class="progress-bar bg-warning" style="width: 95%;"></div>
+                                        </div>
+                                    </td>
+                                    <td>475 MW</td>
+                                    <td>38 °C</td>
+                                    <td><span class="badge bg-success">OPTIMAL</span></td>
+                                    <td><button class="btn btn-sm btn-outline-info" onclick="toggleUnitState(this, 'SL-01')">Standby</button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge bg-dark border">GT-01</span></td>
+                                    <td>H-Class Combined Cycle Gas Turbine 1</td>
+                                    <td>
+                                        <div class="progress bg-dark" style="height:6px; width:80px;">
+                                            <div class="progress-bar bg-danger" style="width: 75%;"></div>
+                                        </div>
+                                    </td>
+                                    <td>620 MW</td>
+                                    <td>580 °C</td>
+                                    <td><span class="badge bg-warning text-dark">HIGH LOAD</span></td>
+                                    <td><button class="btn btn-sm btn-outline-info" onclick="toggleUnitState(this, 'GT-01')">Throttling</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <!-- PAGE 4: SUSTAINABILITY & INNOVATION -->
+    <div id="page-sustainability" class="page-view">
+        <section class="py-5">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <span class="badge bg-secondary text-success px-3 py-2">ECO-RESPONSIBILITY</span>
+                    <h2 class="display-6 fw-bold text-white mt-2">DECARBONIZATION & CLEAN VISION</h2>
+                    <p class="text-muted max-w-700 mx-auto">Hassan Energy is committed to reaching net-zero operational carbon emissions by 2038 through tech innovations.</p>
+                </div>
+
+                <div class="row g-4 align-items-center mb-5">
+                    <div class="col-lg-6">
+                        <img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?q=80&w=1000&auto=format&fit=crop" class="img-fluid rounded-3 border border-secondary shadow" alt="Green Energy Innovations">
+                    </div>
+                    <div class="col-lg-6">
+                        <h3 class="text-cyan fw-bold mb-3">Roadmap to Net-Zero Power Generation</h3>
+                        <p class="text-muted">
+                            Our environmental charter sets stringent benchmarks for carbon intensity reduction, watershed protection around hydroelectric reservoirs, and zero-waste cooling systems.
+                        </p>
+                        <div class="cyber-card p-3 mb-3">
+                            <h5 class="text-white mb-1"><i class="fa-solid fa-cloud-arrow-down text-success me-2"></i> Carbon Capture & Sequestration (CCS)</h5>
+                            <p class="text-muted small mb-0">Capturing over 85% of flue-gas carbon dioxide from natural gas units for synthetic fuel synthesis and deep geological storage.</p>
+                        </div>
+                        <div class="cyber-card p-3 mb-3">
+                            <h5 class="text-white mb-1"><i class="fa-solid fa-battery-full text-warning me-2"></i> Grid Battery Buffer (500 MWh)</h5>
+                            <p class="text-muted small mb-0">Large-scale lithium-iron-phosphate battery energy storage systems smooth solar duck-curve volatility.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Green Metrics Grid -->
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="cyber-card p-4 text-center">
+                            <i class="fa-solid fa-hand-holding-droplet text-info fs-1 mb-3"></i>
+                            <h4 class="text-white">Zero Water Waste</h4>
+                            <p class="text-muted small">Closed-loop cooling towers save over 12 million cubic meters of natural water resources annually.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="cyber-card p-4 text-center">
+                            <i class="fa-solid fa-seedling text-success fs-1 mb-3"></i>
+                            <h4 class="text-white">Biodiversity Zones</h4>
+                            <p class="text-muted small">1,500 hectares of protected wetlands surrounding our hydro dam dedicated to native wildlife habitats.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="cyber-card p-4 text-center">
+                            <i class="fa-solid fa-recycle text-warning fs-1 mb-3"></i>
+                            <h4 class="text-white">99% By-Product Reuse</h4>
+                            <p class="text-muted small">All combustion byproducts are safely captured and repurposed for eco-friendly construction materials.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <!-- PAGE 5: CONTACT & SITE INQUIRY -->
+    <div id="page-contact" class="page-view">
+        <section class="py-5">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <span class="badge bg-secondary text-cyan px-3 py-2">GET IN TOUCH</span>
+                    <h2 class="display-6 fw-bold text-white mt-2">PLANT HEADQUARTERS & INQUIRIES</h2>
+                    <p class="text-muted">Schedule an educational tour, submit industrial power supply RFPs, or contact emergency dispatch.</p>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Contact Form -->
+                    <div class="col-lg-7">
+                        <div class="cyber-card p-4">
+                            <h4 class="text-white mb-4"><i class="fa-solid fa-paper-plane text-cyan me-2"></i> Transmission & Site Visit Inquiry Form</h4>
+                            
+                            <div id="contactAlert" class="alert alert-success d-none" role="alert">
+                                <i class="fa-solid fa-circle-check me-2"></i> Thank you! Your inquiry has been routed to Hassan Plant Operations. Dispatch ticket #HP-8942 generated.
+                            </div>
+
+                            <form id="plantContactForm" onsubmit="handleFormSubmit(event)">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label text-muted">Full Name</label>
+                                        <input type="text" class="form-control bg-dark border-secondary text-white" required placeholder="Eng. Ali Hassan">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label text-muted">Organization / Company</label>
+                                        <input type="text" class="form-control bg-dark border-secondary text-white" required placeholder="National Grid Corp">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label text-muted">Email Address</label>
+                                        <input type="email" class="form-control bg-dark border-secondary text-white" required placeholder="ali.hassan@energy.com">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label text-muted">Inquiry Category</label>
+                                        <select class="form-select bg-dark border-secondary text-white">
+                                            <option>High Voltage Power PPA</option>
+                                            <option>Industrial Tour Request</option>
+                                            <option>Vendor & Supply Chain</option>
+                                            <option>Environmental Compliance</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label text-muted">Message / Technical Requirements</label>
+                                        <textarea class="form-control bg-dark border-secondary text-white" rows="4" required placeholder="Specify load requirements (MW), connection voltage, or visit party size..."></textarea>
+                                    </div>
+                                    <div class="col-12 mt-4">
+                                        <button type="submit" class="btn btn-cyber-primary w-100">
+                                            <i class="fa-solid fa-satellite-dish me-2"></i> Submit Official Transmission Inquiry
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Contact Details & Interactive Location Map Visual -->
+                    <div class="col-lg-5">
+                        <div class="cyber-card p-4 mb-4">
+                            <h5 class="text-white mb-3"><i class="fa-solid fa-building text-cyan me-2"></i> Direct Plant Contacts</h5>
+                            <ul class="list-unstyled text-muted mb-0">
+                                <li class="mb-3 d-flex align-items-start">
+                                    <i class="fa-solid fa-location-dot text-cyan fs-5 me-3 mt-1"></i>
+                                    <div>
+                                        <strong class="text-white d-block">Hassan Power Plant Complex</strong>
+                                        Sector 74-A, Energy Industrial Corridor, Power Hub Zone
+                                    </div>
+                                </li>
+                                <li class="mb-3 d-flex align-items-center">
+                                    <i class="fa-solid fa-phone text-cyan fs-5 me-3"></i>
+                                    <div>
+                                        <strong class="text-white d-block">Dispatch Control Desk</strong>
+                                        +92 (021) 555-POWER (76937)
+                                    </div>
+                                </li>
+                                <li class="mb-3 d-flex align-items-center">
+                                    <i class="fa-solid fa-triangle-exclamation text-warning fs-5 me-3"></i>
+                                    <div>
+                                        <strong class="text-white d-block">24/7 Emergency Line</strong>
+                                        +92 (0800) 911-GRID-EMERGENCY
+                                    </div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <i class="fa-solid fa-envelope text-cyan fs-5 me-3"></i>
+                                    <div>
+                                        <strong class="text-white d-block">Official Email</strong>
+                                        dispatch@hassanpowerplant.com
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Stylized Interactive Map Placeholder -->
+                        <div class="cyber-card p-3">
+                            <h6 class="text-white mb-2"><i class="fa-solid fa-map-location-dot text-cyan me-2"></i> Interactive Complex Radar Map</h6>
+                            <div class="rounded border border-secondary p-4 text-center position-relative overflow-hidden" style="background: #050a12; min-height: 200px;">
+                                <div class="position-absolute top-50 start-50 translate-middle">
+                                    <i class="fa-solid fa-crosshairs text-cyan display-4 opacity-50"></i>
+                                    <p class="text-cyan small fw-bold mb-0 mt-2">LAT: 24.8607° N | LONG: 67.0011° E</p>
+                                    <span class="badge bg-success mt-1">HASSAN POWER MAIN GRID NODE</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <!-- MODAL FOR FACILITY DETAILS -->
+    <div class="modal fade" id="facilityModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-card border border-info text-white">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-header-title text-cyan mb-0" id="facilityModalTitle">Facility Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="facilityModalBody">
+                    ...
+                </div>
+                <div class="modal-footer border-secondary">
+                    <button type="button" class="btn btn-cyber-outline py-1 px-3" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="py-5">
+        <div class="container">
+            <div class="row g-4 mb-4">
+                <div class="col-lg-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fa-solid fa-bolt-lightning text-cyan fs-3 me-2"></i>
+                        <span class="fw-bold tracking-wider fs-5 text-white">HASSAN POWER PLANT</span>
+                    </div>
+                    <p class="text-muted small">
+                        Pioneering ultra-efficient multi-source energy generation for a sustainable industrial future. Committed to continuous grid resilience, low emissions, and technological safety.
+                    </p>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h6 class="text-white mb-3">Navigation</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#home" onclick="switchPage('home')" class="text-muted text-decoration-none hover-cyan">Overview</a></li>
+                        <li class="mb-2"><a href="#facilities" onclick="switchPage('facilities')" class="text-muted text-decoration-none hover-cyan">Facilities & Tech</a></li>
+                        <li class="mb-2"><a href="#dashboard" onclick="switchPage('dashboard')" class="text-muted text-decoration-none hover-cyan">Live Telemetry</a></li>
+                        <li class="mb-2"><a href="#sustainability" onclick="switchPage('sustainability')" class="text-muted text-decoration-none hover-cyan">Sustainability</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-4">
+                    <h6 class="text-white mb-3">Safety & Governance</h6>
+                    <ul class="list-unstyled small text-muted">
+                        <li class="mb-2"><i class="fa-solid fa-shield me-2 text-cyan"></i> ISO 50001 Energy Management</li>
+                        <li class="mb-2"><i class="fa-solid fa-shield me-2 text-cyan"></i> ISO 14001 Environmental Standard</li>
+                        <li class="mb-2"><i class="fa-solid fa-shield me-2 text-cyan"></i> NERC CIP Cybersecurity Compliant</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-4">
+                    <h6 class="text-white mb-3">Control Room Dispatch</h6>
+                    <p class="text-muted small mb-2">Emergency grid synchronization desk operates 24 hours a day, 365 days a year.</p>
+                    <span class="badge bg-dark border border-success text-success px-3 py-2"><i class="fa-solid fa-signal me-1"></i> TELEMETRY ONLINE</span>
+                </div>
+            </div>
+            <div class="pt-4 border-top border-secondary text-center text-muted small">
+                <p class="mb-0">&copy; <span id="yearSpan"></span> Hassan Electric Power Plant Complex. All Rights Reserved. Engineered for Grid Reliability.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom App Logic & Telemetry Simulations -->
+    <script>
+        // Set year dynamically
+        document.getElementById('yearSpan').textContent = new Date().getFullYear();
+
+        // Single Page Router Logic
+        function switchPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page-view');
+            pages.forEach(page => page.classList.remove('active'));
+
+            // Deactivate all nav links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+
+            // Show selected page
+            const targetPage = document.getElementById('page-' + pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+
+            // Activate nav link
+            const targetNav = document.getElementById('nav-' + pageId);
+            if (targetNav) {
+                targetNav.classList.add('active');
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Trigger chart resize if navigating to dashboard
+            if (pageId === 'dashboard' && window.powerChart) {
+                setTimeout(() => {
+                    window.powerChart.resize();
+                    window.mixChart.resize();
+                }, 100);
+            }
+        }
+
+        // Interactive Diagram Inspector Data
+        const diagramData = {
+            hydro: {
+                title: "Hydroelectric Turbine Complex Alpha",
+                desc: "Harnessing water kinetic energy with 6 Francis High-Efficiency Turbines. Delivers zero-emission base load energy directly into the regional transmission ring.",
+                mw: "1,180 MW",
+                temp: "48.2 °C",
+                percent: 88,
+                barColor: "bg-info"
+            },
+            solar: {
+                title: "Solar Photovoltaic Array Sector",
+                desc: "2,400-acre bifacial tracker field converting solar photons directly to DC power, conditioned through 45 megawatt inverter central stations.",
+                mw: "945 MW",
+                temp: "36.8 °C",
+                percent: 94,
+                barColor: "bg-warning"
+            },
+            gas: {
+                title: "Combined-Cycle Gas Turbine Sector (CCGT)",
+                desc: "Dual H-Class combustion turbines utilizing low-NOx burners with waste-heat steam recovery to achieve industry-leading operational efficiency.",
+                mw: "1,620 MW",
+                temp: "585.0 °C",
+                percent: 78,
+                barColor: "bg-danger"
+            },
+            grid: {
+                title: "500kV High-Voltage Transmission Substation",
+                desc: "Primary interconnect hub featuring SF6-free eco gas switchgears and automated phase synchronization for regional stability.",
+                mw: "3,745 MW Total",
+                temp: "41.5 °C",
+                percent: 99,
+                barColor: "bg-success"
+            }
+        };
+
+        function selectDiagramNode(nodeKey) {
+            // Update node visual state
+            document.querySelectorAll('.diagram-node').forEach(node => node.classList.remove('active-node'));
+            const activeNode = document.getElementById('node-' + nodeKey);
+            if (activeNode) activeNode.classList.add('active-node');
+
+            // Update Inspector text
+            const info = diagramData[nodeKey];
+            if (info) {
+                document.getElementById('inspector-title').innerText = info.title;
+                document.getElementById('inspector-desc').innerText = info.desc;
+                document.getElementById('inspector-mw').innerText = info.mw;
+                document.getElementById('inspector-temp').innerText = info.temp;
+                const bar = document.getElementById('inspector-bar');
+                bar.style.width = info.percent + '%';
+                bar.className = 'progress-bar ' + info.barColor;
+            }
+        }
+
+        // Facility Technical Modal
+        function showFacilityModal(title, description) {
+            document.getElementById('facilityModalTitle').innerText = title + " - Engineering Spec";
+            document.getElementById('facilityModalBody').innerHTML = `
+                <p class="text-muted">${description}</p>
+                <div class="cyber-card p-3 bg-dark">
+                    <h6 class="text-cyan mb-2"><i class="fa-solid fa-microchip me-2"></i> System Diagnostics</h6>
+                    <ul class="small text-muted mb-0">
+                        <li>Vibration Tolerance: &lt; 0.02 mm/s</li>
+                        <li>Automated Emergency Shutdown Delay: &lt; 50ms</li>
+                        <li>SCADA Protocol: IEC 61850 Substation Automation</li>
+                    </ul>
+                </div>
+            `;
+            const modal = new bootstrap.Modal(document.getElementById('facilityModal'));
+            modal.show();
+        }
+
+        // Form Submit Handler
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const alertBox = document.getElementById('contactAlert');
+            alertBox.classList.remove('d-none');
+            document.getElementById('plantContactForm').reset();
+            setTimeout(() => {
+                alertBox.classList.add('d-none');
+            }, 6000);
+        }
+
+        // SCADA Live Telemetry Simulation Charts Setup
+        let isSimulating = true;
+        let simTimer = null;
+
+        window.onload = function() {
+            // Initialize Telemetry Line Chart
+            const ctxPower = document.getElementById('powerTrendChart').getContext('2d');
+            const timeLabels = ['12:00', '12:05', '12:10', '12:15', '12:20', '12:25', '12:30', '12:35', '12:40', '12:45'];
+            const initialData = [2850, 2870, 2890, 2880, 2910, 2905, 2920, 2915, 2900, 2910];
+
+            window.powerChart = new Chart(ctxPower, {
+                type: 'line',
+                data: {
+                    labels: timeLabels,
+                    datasets: [{
+                        label: 'Total Generation MW',
+                        data: initialData,
+                        borderColor: '#00f2fe',
+                        backgroundColor: 'rgba(0, 242, 254, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.3,
+                        pointBackgroundColor: '#00f2fe'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#94A3B8', font: { family: 'Inter' } } }
+                    },
+                    scales: {
+                        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94A3B8' } },
+                        y: { 
+                            grid: { color: 'rgba(255,255,255,0.05)' }, 
+                            ticks: { color: '#94A3B8' },
+                            min: 2500,
+                            max: 3500
+                        }
+                    }
+                }
+            });
+
+            // Initialize Energy Mix Doughnut Chart
+            const ctxMix = document.getElementById('energyMixChart').getContext('2d');
+            window.mixChart = new Chart(ctxMix, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Hydro Dam', 'Solar PV', 'CCGT Gas'],
+                    datasets: [{
+                        data: [35, 30, 35],
+                        backgroundColor: ['#00f2fe', '#f59e0b', '#ef4444'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: '#94A3B8', font: { family: 'Inter' } } }
+                    }
+                }
+            });
+
+            // Start Live Telemetry Loop
+            startTelemetryLoop();
+        };
+
+        function startTelemetryLoop() {
+            if (simTimer) clearInterval(simTimer);
+            simTimer = setInterval(() => {
+                if (!isSimulating) return;
+
+                // Random small telemetry fluctuations
+                const currentVal = window.powerChart.data.datasets[0].data.slice(-1)[0];
+                const delta = (Math.random() * 30 - 15);
+                const newVal = Math.round(Math.min(Math.max(currentVal + delta, 2700), 3400));
+
+                // Update Hero and Dashboard displays
+                document.getElementById('dash-power').innerText = newVal.toLocaleString();
+                document.getElementById('hero-mw').innerHTML = `${newVal.toLocaleString()} <span class="fs-6 text-muted">MW</span>`;
+
+                const freq = (50.00 + (Math.random() * 0.06 - 0.03)).toFixed(2);
+                document.getElementById('dash-freq').innerText = freq;
+                document.getElementById('hero-hz').innerHTML = `${freq} <span class="fs-6 text-muted">Hz</span>`;
+
+                const rpm = Math.round(3000 + (Math.random() * 6 - 3));
+                document.getElementById('dash-rpm').innerText = rpm;
+
+                // Push new data point to chart
+                const now = new Date();
+                const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0') + ':' + now.getSeconds().toString().padStart(2, '0');
+
+                window.powerChart.data.labels.push(timeStr);
+                window.powerChart.data.datasets[0].data.push(newVal);
+
+                if (window.powerChart.data.labels.length > 12) {
+                    window.powerChart.data.labels.shift();
+                    window.powerChart.data.datasets[0].data.shift();
+                }
+
+                window.powerChart.update('none');
+
+            }, 1800);
+        }
+
+        function toggleSimulation(checkbox) {
+            isSimulating = checkbox.checked;
+        }
+
+        function triggerGridEvent(type) {
+            if (type === 'peak') {
+                const chartData = window.powerChart.data.datasets[0].data;
+                const lastVal = chartData[chartData.length - 1];
+                const surgeVal = Math.min(lastVal + 350, 3450);
+                chartData[chartData.length - 1] = surgeVal;
+                document.getElementById('dash-power').innerText = surgeVal.toLocaleString();
+                document.getElementById('dash-power-delta').innerText = "⚡ SURGE DEMAND ACTIVE";
+                document.getElementById('dash-power-delta').className = "text-warning fw-bold";
+                window.powerChart.update();
+            } else {
+                document.getElementById('dash-power-delta').innerText = "+2.4% vs Target";
+                document.getElementById('dash-power-delta').className = "text-success";
+                startTelemetryLoop();
+            }
+        }
+
+        function toggleUnitState(btn, unitId) {
+            if (btn.innerText === "Standby" || btn.innerText === "Throttling") {
+                btn.innerText = "Re-Engage";
+                btn.className = "btn btn-sm btn-success";
+            } else {
+                btn.innerText = "Standby";
+                btn.className = "btn btn-sm btn-outline-info";
+            }
+        }
+    </script>
+</body>
+</html>
